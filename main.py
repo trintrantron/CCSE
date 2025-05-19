@@ -1,10 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, g
 from db import Task
 import logging
+import secrets
+from flask_wtf import CSRFProtect
+import os
+import http.server
 
 from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY')
+csrf = CSRFProtect(app)
+http.server.BaseHTTPRequestHandler.version_string = lambda self: ""
 
 ###################################################################################################################
 # Logger
@@ -86,6 +93,22 @@ def make_session_permanent():
 # Pages
 ###################################################################################################################
 
+@app.before_request
+def generate_nonce():
+    g.nonce = secrets.token_urlsafe(16)
+
+@app.after_request
+def add_csp_header(response):
+    nonce = g.get('nonce')
+    csp = (
+        f"default-src 'self'; "
+        f"style-src 'self' 'nonce-{nonce}'; "
+        f"form-action 'self'; "
+        f"frame-ancestors 'self';"
+    )
+    response.headers['Content-Security-Policy'] = csp
+    return response
+    
 @app.route('/', methods=['GET', 'POST'])
 def login_page():
     if not("message" in session):
@@ -414,4 +437,4 @@ def logout():
         return redirect("/")
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run(debug=False, port=8080)
