@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Cart - Products</title>
+    <style nonce="{{ g.nonce }}">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px 0;
+            padding: 0;
+            background-color: #b8f5ed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #logo {
+            width: 1248px;
+            height: 192px;
+            position: absolute;
+            top: 0;
+            left: 0px;
+        }
+
+        .menu {
+            position: absolute;
+            position: fixed;
+            left: 0px;
+            top: 220px;
+            background-color: white;
+            font-family: "Raleway", sans-serif;
+        }
+
+        #view_all_button {
+            background-color: #00c2a8;
+        }
+
+        .menu_button {
+            width: 450px;
+            height: 130px;
+            align-items: center;
+            font-family: inherit;
+            background-color: #b8f5ed;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 auto;
+            font-weight: bold;
+            font-size: 40px;
+            transition: background-color 0.75s;
+            border: none;
+            border-bottom:  10px solid #b8f5ed;
+        }
+
+        .menu_button:hover {
+            background-color: #00c2a8;
+        }
+
+        .banner {
+            width: 100vw;
+            height: 200px;
+            background-color: #00c2a8; 
+            display: flex;
+            position: fixed;
+            top: 0;
+            border-bottom:  20px solid #d7faf5;
+            z-index: 999;
+        }
+
+        .logout {
+            width: 160px;
+            height: 160px;
+            position: absolute;
+            right: 30px;
+            top: 20px;
+            font-family: inherit;
+            background-color: #b8f5ed;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 auto;
+            font-weight: bold;
+            font-size: 30px;
+            transition: background-color 0.75s;
+            border: 10px solid #b8f5ed;
+        }
+
+        .logout:hover {
+            background-color: #00c2a8;
+        }
+
+        .basket {
+            width: 160px;
+            height: 160px;
+            position: absolute;
+            right: 210px;
+            top: 20px;
+            font-family: inherit;
+            background-color: #b8f5ed;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 auto;
+            font-weight: bold;
+            font-size: 30px;
+            transition: background-color 0.75s;
+            border: 10px solid #b8f5ed;
+        }
+
+        .basket:hover {
+            background-color: #00c2a8;
+        }
+
+        .products_grid {
+            position: absolute;
+            color: #fff;
+            font-family: "Raleway", sans-serif;
+            font-weight: bold;
+            top: 250px;
+            left: 500px;
+        }
+
+        .product {
+            display: inline-block;
+            margin-right: 50px;
+        }
+
+        #addToBasket {
+            width: 150px;
+            height: 80px;
+            padding: 15px;
+            border: none;
+            align-items: center;
+            background-color: #b8f5ed;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 auto;
+            font-family: "Raleway", sans-serif;
+            font-weight: bold;
+            font-size: 22px;
+            border-radius: 5px;
+        }
+
+        #addToBasket:hover {
+            background-color: #00c2a8;
+        }
+
+        #tree {
+            width: 80px;
+            height: 80px;
+            margin-right:10px;
+        }
+
+        #formA {
+            width: 150px;
+            height: 80px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        #product_description {
+            width: 450px;
+        }
+
+        #box {
+            width: 300px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img id="logo" src="{{ url_for('static', filename='logo.png') }}">
+
+        <form action="/logout" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="logout" type="submit">Logout</button>
+        </form>
+
+        <form action="/basket" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="basket" type="submit">View Basket</button>
+        </form>
+    </div>
+
+    <div class="menu">
+        <form action="/user_homepage" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="menu_button" type="submit">Home</button>
+        </form>
+
+        <form>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="menu_button" id="view_all_button" type="submit">View all products</button>
+        </form>
+
+        <form action="/about_us" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="menu_button" type="submit">About us</button>
+        </form>
+
+        <form action="/contact_us" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="menu_button" type="submit">Contact us</button>
+        </form>
+    </div>
+
+    <div class="products_grid">
+        {% for product in products %}
+            <div>
+                <img id="tree" src="{{ url_for('static', filename='tree.png') }}">
+                <h1 class="product" id="box">{{product.productName}}</h1>
+                <div class="product" id="product_description">
+                    <h1 class="product">{{product.productDescription}}</h1>
+                </div>
+                <h1 class="product">£{{product.productPrice}}</h1>
+                <form class="product" id="formA" action="/add_to_basket" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input hidden name="prodId" value="{{product.productName}}">
+                    <button id="addToBasket" type="submit">Add to basket</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if message %}
+        <script>
+            alert("{{message}}");
+        </script>
+    {% endif %}
+  
+</body>
+</html>

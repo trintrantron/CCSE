@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Cart - About us</title>
+    <style nonce="{{ g.nonce }}">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px 0;
+            padding: 0;
+            background-color: #b8f5ed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #logo {
+            width: 1248px;
+            height: 192px;
+            position: absolute;
+            top: 0;
+            left: 0px;
+        }
+
+        .menu {
+            position: absolute;
+            position: fixed;
+            left: 0px;
+            top: 220px;
+            background-color: white;
+            font-family: "Raleway", sans-serif;
+        }
+
+        #about_us_button {
+            background-color: #00c2a8;
+        }
+
+        .menu_button {
+            width: 450px;
+            height: 130px;
+            align-items: center;
+            font-family: inherit;
+            background-color: #b8f5ed;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 auto;
+            font-weight: bold;
+            font-size: 40px;
+            transition: background-color 0.75s;
+            border: none;
+            border-bottom:  10px solid #b8f5ed;
+        }
+
+        .menu_button:hover {
+            background-color: #00c2a8;
+        }
+
+        .banner {
+            width: 100vw;
+            height: 200px;
+            background-color: #00c2a8; 
+            display: flex;
+            position: fixed;
+            top: 0;
+            border-bottom:  20px solid #d7faf5;
+            z-index: 999;
+        }
+
+        .logout {
+            width: 160px;
+            height: 160px;
+            position: absolute;
+            right: 30px;
+            top: 20px;
+            font-family: inherit;
+            background-color: #b8f5ed;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 auto;
+            font-weight: bold;
+            font-size: 30px;
+            transition: background-color 0.75s;
+            border: 10px solid #b8f5ed;
+        }
+
+        .logout:hover {
+            background-color: #00c2a8;
+        }
+
+        .basket {
+            width: 160px;
+            height: 160px;
+            position: absolute;
+            right: 210px;
+            top: 20px;
+            font-family: inherit;
+            background-color: #b8f5ed;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 auto;
+            font-weight: bold;
+            font-size: 30px;
+            transition: background-color 0.75s;
+            border: 10px solid #b8f5ed;
+        }
+
+        .basket:hover {
+            background-color: #00c2a8;
+        }
+
+        .message {
+            position: absolute;
+            left: 500px;
+            top: 250px;
+            background-color: #b8f5ed;
+            font-family: "Raleway", sans-serif;
+            font-weight: bold;
+        }
+
+        #welcome {
+            font-family: inherit;
+            font-size: 50px;
+            color: #00c2a8;
+        }
+
+        #underline {
+            font-family: inherit;
+            font-size: 15px;
+            color: #00c2a8;
+        }
+
+        #hope {
+            font-family: inherit;
+            font-size: 30px;
+            color: #fff;
+        }
+
+        #about_us_img {
+            width: 900px;
+            height: 600px;
+            position: absolute;
+            top: 370px;
+            left: 600px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img id="logo" src="{{ url_for('static', filename='logo.png') }}">
+
+        <form action="/logout" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="logout" type="submit">Logout</button>
+        </form>
+
+        <form action="/basket" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="basket" type="submit">View Basket</button>
+        </form>
+    </div>
+
+    <div class="menu">
+        <form action="/user_homepage" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="menu_button" type="submit">Home</button>
+        </form>
+
+        <form action="/view_products" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="menu_button" type="submit">View all products</button>
+        </form>
+
+        <form>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="menu_button" id="about_us_button" type="submit">About us</button>
+        </form>
+
+        <form action="/contact_us" method ="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="menu_button" type="submit">Contact us</button>
+        </form>
+    </div>
+
+    <div class="message">
+        <form>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label id="welcome">Hi {{username}}, read about our amazing company below...</label>
+        </form>
+        <form>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label id="underline">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</label>
+        </form>
+        <form>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label id="hope">We are very proud to have reached where we are, driven by our love for trees!!</label>
+        </form>
+    </div>
+
+    <div id="about_us">
+        <img id="about_us_img" src="{{ url_for('static', filename='aboutUs.png') }}">
+    </div>
+  
+</body>
+</html>

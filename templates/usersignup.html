@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Cart - Sign Up</title>
+    <style nonce="{{ g.nonce }}">
+         body {
+            font-family: "Raleway", sans-serif; 
+            margin: 0;
+            padding: 0;
+            background-color: #b8f5ed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+	
+        #bg1 {
+            width: 1920px;
+            height: 1080px;
+            position: absolute;
+            top: 0;
+            left:0px;
+            z-index: -1;         
+        }
+
+        #container {
+            width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color:#ffffff;   
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+	
+
+        #heading {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: "Raleway", sans-serif; 
+            font-size: 36px;
+
+        }
+
+        #registration-form {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            font-weight: bold;
+            font-family: "Raleway", sans-serif; 
+            font-size: 22px;
+        }
+
+        input, button {
+            display: block;
+            margin: 20px 0;
+		}
+
+        input{
+            width: 460px;
+            padding: 16px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: "Raleway", sans-serif; 
+            margin: 0 auto;
+		    margin-right: 100px;
+		}
+
+
+        #create_user {
+            background-color: #b8f5ed;
+            color: white;
+            border: none;
+            width: 493px;
+            font-family: "Raleway", sans-serif; 
+            font-size: 32px;
+            font-weight: bold;
+            height: 50px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #create_user:hover {
+            background-color: #00c2a8;
+        }
+
+        #logo {
+            width: 384px;
+            height: 192px;
+            position: absolute;
+            top: 0;
+            left: 0px;
+        }
+
+        .errorlabel {
+            text-align: center;
+            font-size: 14px;
+            font-family: inherit;
+            color: #ff0000;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <img id="logo" src="{{ url_for('static', filename='logo3.png') }}">
+    
+    <div id="container">
+        <h1 id="heading">Create a user</h1>
+        <form id="registration-form" action="/signup_confirm" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label for="username" >Username:</label><br>
+            <input type="text" id="username" placeholder="Username" name="username" required><br><br>
+            
+            <label for="email">Email Address:</label><br>
+            <input type="email" id="email" name="email" placeholder="example@example.com" required><br><br>
+            
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" placeholder="Password" required><br><br>
+            
+            <label for="confirm_password">Confirm Password:</label><br>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password" required><br><br>
+
+            <form action="/signup_confirm" method ="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button id="create_user" type="submit">Create user</button>
+            </form>
+
+            <label class="errorlabel">{{message}}<label>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

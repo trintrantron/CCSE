@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Cart - Login</title>
+    <style nonce="{{ g.nonce }}">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px 0;
+            padding: 0;
+            background-color: #b8f5ed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        form {
+            background-color: #fff;
+            padding: 30px;
+            height: 400px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin-bottom: 130px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 140px;
+            font-family: "Raleway", sans-serif;
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 70px;
+        }
+        
+        h2 {
+            text-align: center;
+            font-size: 24px;
+            font-family: "Raleway", sans-serif;
+            color: #262626;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        
+        label {
+            text-align: center;
+            font-size: 14px;
+            font-family: inherit;
+            color: #ff0000;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        
+        a {
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            color: #262626;
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        input,
+        button {
+            display: block;
+            margin: 20px 0;
+        }
+        
+        input {
+            width: 370px;
+            padding: 16px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-family: inherit;
+            margin: 1 auto;
+        }
+        
+        button {
+            width: 405px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+            align-items: center;
+            background-color: #b8f5ed;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 auto;
+            font-family: "Raleway", sans-serif;
+            font-weight: bold;
+            font-size: 22px;
+        }
+        
+        button:hover {
+            background-color: #00c2a8;
+        }
+        
+        #logo {
+            width: 384px;
+            height: 192px;
+            position: absolute;
+            top: 0;
+            left: 0px;
+        }
+
+        .signupbutton {
+            width: 220px;
+            height: 70px;
+            padding: 15px;
+            align-items: center;
+            border-radius: 5px;
+            font-family: inherit;
+            align-items: center;
+            background-color: #b8f5ed;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 auto;
+            font-family: "Raleway", sans-serif;
+            font-weight: bold;
+            font-size: 28px;
+        }
+
+        .signupbutton:hover {
+            background-color: #00c2a8;
+        }
+
+        .formA {
+            width: 220px;
+            height: 70px;
+            padding: 15px;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            border-radius: 5px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+
+<body>
+    <img id="logo" src="{{ url_for('static', filename='logo3.png') }}">
+
+    <div class="login-container">
+
+
+        <form action="/login" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <h2>Please sign in to your SecureCart account</h2>
+
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <label>{{message}}<label>
+            <button type="submit">Sign in</button>
+            <a href="/forgot_password">Forgot your password?</a>
+
+        </form>
+    </div>
+
+    <form class="formA" action="/signup" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="signupbutton" type="submit">Sign up</button>
+    </form>
+
+        </body>
+        </html>
