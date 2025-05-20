@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, String, ForeignKey
-from sqlalchemy.orm import sessionmaker, declarative_base 
+from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.orm.exc import NoResultFound
 from itertools import count
 import hashlib
@@ -9,7 +9,7 @@ from sqlalchemy_utils import StringEncryptedType
 from sqlalchemy_utils.types.encrypted.encrypted_type import AesEngine
 import time
 
-f = open("db_key", "r")
+f = open("/home/trin/mysite/db_key", "r")
 key = f.readline()
 f.close()
 
@@ -37,40 +37,40 @@ class db:
 # Users
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    class Users(Base): 
+    class Users(Base):
         id_counter = count(start = load_id_count("Users"), step = 1)
         def __init__(self, username, email, password, salt, user_type):
             self.user_id = str(next(self.id_counter))
-            save_val("Users") 
+            save_val("Users")
             self.username = username
             self.email = email
             self.password = password.decode("utf-8")
             self.user_type = user_type
             self.salt = salt
 
-        __tablename__ = "Users"   
+        __tablename__ = "Users"
 
         user_id = Column("User ID", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'), primary_key = True)
         username = Column("Username",StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))
         email = Column("Email", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))
         password = Column("Password", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))
         salt = Column("Salt", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))
-        user_type = Column("User Type", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))         
+        user_type = Column("User Type", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Products
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    class Products(Base): 
+    class Products(Base):
         id_counter = count(start = load_id_count("Products"), step = 1)
         def __init__(self, productName, productDescription, productPrice):
             self.product_id = str(next(self.id_counter))
-            save_val("Products") 
+            save_val("Products")
             self.productName = productName
             self.productDescription = productDescription
             self.productPrice = productPrice
 
-        __tablename__ = "Products"   
+        __tablename__ = "Products"
 
         product_id = Column("Product ID", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'), primary_key = True)
         productName = Column("Product Name",StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))
@@ -81,16 +81,16 @@ class db:
 # Baskets
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    class Baskets(Base): 
+    class Baskets(Base):
         id_counter = count(start = load_id_count("Baskets"), step = 1)
         def __init__(self, user_id, totalPrice, date):
             self.basket_id = str(next(self.id_counter))
-            save_val("Baskets") 
+            save_val("Baskets")
             self.user_id = user_id
             self.totalPrice = totalPrice
             date = date
 
-        __tablename__ = "Baskets"   
+        __tablename__ = "Baskets"
 
         basket_id = Column("Basket ID", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'), primary_key = True)
         user_id = Column("User ID",StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))
@@ -98,22 +98,22 @@ class db:
         date = Column("Date", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))
 
         def resetBasket(self): # sets the total price back to £0
-            self.totalPrice = 0 
+            self.totalPrice = 0
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # User Orders
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    class UserOrders(Base): 
+    class UserOrders(Base):
         id_counter = count(start = load_id_count("UserOrders"), step = 1)
         def __init__(self, user_id, product_name, product_price):
             self.userOrder_id = str(next(self.id_counter))
-            save_val("UserOrders") 
+            save_val("UserOrders")
             self.user_id = user_id
             self.product_name = product_name
             self.product_price = product_price
 
-        __tablename__ = "UserOrders"   
+        __tablename__ = "UserOrders"
 
         userOrder_id = Column("User Order ID", StringEncryptedType(String(100), key, AesEngine, 'pkcs5'), primary_key = True)
         user_id = Column("User ID",StringEncryptedType(String(100), key, AesEngine, 'pkcs5'))
@@ -124,14 +124,14 @@ class db:
 # Purchase History
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    class PurchaseHistory(Base): 
+    class PurchaseHistory(Base):
         id_counter = count(start = load_id_count("PurchaseHistory"), step = 1)
         def __init__(self, username, totalPrice, date):
             self.purhcase_id = str(next(self.id_counter))
             save_val("PurchaseHistory")
-            self.username = username 
+            self.username = username
             self.totalPrice = totalPrice
-            self.date = date 
+            self.date = date
 
         __tablename__ = "Purchase History"
 
@@ -146,7 +146,7 @@ class db:
 
 engine = create_engine("sqlite:///securecart.db", echo = False)
 Base.metadata.create_all(bind=engine)
-   
+
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -154,8 +154,8 @@ session = Session()
 # Defining Tasks
 ###################################################################################################################
 
-class Task: 
-    
+class Task:
+
     # Checks if user exists and returns the object if they do
     def user_exists(username):
         try:
@@ -163,8 +163,8 @@ class Task:
             return(user)
         except NoResultFound as e:
             return(0)
-    
-    # Checks that the basket related to the given user ID has products in it 
+
+    # Checks that the basket related to the given user ID has products in it
     def basket_not_empty(user_id):
         try:
             basket = session.query(db.Baskets).filter(db.Baskets.user_id==user_id).one()
@@ -173,7 +173,7 @@ class Task:
             return(0)
         except NoResultFound as e:
             return(0)
-    
+
     # Checks if a product already exists with the product name, returns it if it does
     def product_exists(productName):
         try:
@@ -181,7 +181,7 @@ class Task:
             return(product)
         except NoResultFound as e:
             return(0)
-    
+
     # Checks to see if the string given can be converted to a float
     def price_is_float(price):
         try:
@@ -189,13 +189,13 @@ class Task:
             return(float(price))
         except ValueError:
             return(0)
-        
-    # Creates new row in the Products table with the given info 
+
+    # Creates new row in the Products table with the given info
     def add_product(productName, productDescription, productPrice):
         product = db.Products(productName, productDescription, productPrice)
         session.add(product)
         session.commit()
-        
+
     # Returns the Products table in a list
     def list_products():
         productTable = session.query(db.Products).all()
@@ -203,8 +203,8 @@ class Task:
         for product in productTable:
             products.append(product)
         return(products)
-        
-    # Checks user does not already exist and adds them to the system 
+
+    # Checks user does not already exist and adds them to the system
     def add_user(username, email, password, user_type):
         if Task.user_exists(username) == 0:
             req = Task.check_password(password)
@@ -232,8 +232,8 @@ class Task:
                 return((True, username))
         return((False, "Incorrect username or password"))
 
-    # Retuns true if the password given meets the security requirements 
-    def check_password(password): 
+    # Retuns true if the password given meets the security requirements
+    def check_password(password):
         if  len(password) < 8 or len(password) > 71: return (False, "Password does not meet the length requirements")
         if  not any(letter.isupper() for letter in password): return (False, "Password must contain a captial letter")
         if  not any(letter.islower() for letter in password): return (False, "Password must contain a lower case letter")
@@ -249,7 +249,7 @@ class Task:
         if user != 0 and product != 0:
             userOrder = db.UserOrders(user.user_id, product.productName, product.productPrice) # This creates a user order with the user's id
             basket = session.query(db.Baskets).filter(db.Baskets.user_id==user.user_id).one() # This gets the basket for the correct user
-            
+
             productPrice = float(product.productPrice) # This converts all price values into floats for calculations
             totalPrice = float(basket.totalPrice)
             totalPrice = totalPrice + productPrice
@@ -261,26 +261,26 @@ class Task:
             session.commit()
             return(True, "Added to basket.")
         return(False, "Error")
-    
+
     # This updates the total price of the contents of the user's basket and deletes the associated user order
     def remove_from_basket(userOrderId):
-        userOrder = session.query(db.UserOrders).filter(db.UserOrders.userOrder_id==userOrderId).one() 
+        userOrder = session.query(db.UserOrders).filter(db.UserOrders.userOrder_id==userOrderId).one()
         basket = session.query(db.Baskets).filter(db.Baskets.user_id==userOrder.user_id).one()
         product = session.query(db.Products).filter(db.Products.productName==userOrder.product_name).one()
-        
+
         productPrice = float(product.productPrice) # This converts all price values into floats for calculations
         totalPrice = float(basket.totalPrice)
         totalPrice = totalPrice - productPrice
         totalPrice = str(round(totalPrice, 2)) # This converts the price back into a string for storage in the database
 
-        basket.totalPrice = totalPrice  
+        basket.totalPrice = totalPrice
         basket.date = time.strftime("%d-%m-%Y")
-    
+
         session.delete(userOrder)
-        
+
         session.commit()
         return(True, "Removed from basket.")
-    
+
     # This finds all user orders relating to the user given, returning them as a list
     def get_user_orders(username):
         user = Task.user_exists(username)
@@ -309,17 +309,17 @@ class Task:
         date = time.strftime("%d-%m-%Y")
         if basket != 0:
             purchase = db.PurchaseHistory(user.username, basket.totalPrice, date) # Add the purchase to history
-    
-            userOrders = session.query(db.UserOrders).filter(db.UserOrders.user_id==user.user_id).all() # Delete all products in the 
+
+            userOrders = session.query(db.UserOrders).filter(db.UserOrders.user_id==user.user_id).all() # Delete all products in the
             for order in userOrders:
                 session.delete(order)
-            
+
             session.add(purchase)
             db.Baskets.resetBasket(basket) # Reset the basket total
             session.commit()
             return(True)
         return(False)
-        
+
     # This returns a list of all rows in the PurchaseHistory table
     def list_purchases():
         purchases = session.query(db.PurchaseHistory).all()
