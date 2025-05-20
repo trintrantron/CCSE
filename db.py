@@ -9,7 +9,7 @@ from sqlalchemy_utils import StringEncryptedType
 from sqlalchemy_utils.types.encrypted.encrypted_type import AesEngine
 import time
 
-f = open("db_key", "r")
+f = open("/home/trin/mysite/db_key", "r")
 key = f.readline()
 f.close()
 
