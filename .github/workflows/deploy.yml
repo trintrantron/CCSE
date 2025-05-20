@@ -18,7 +18,4 @@ jobs:
           username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           api_token: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
           domain_name: ${{ secrets.PYTHONANYWHERE_DOMAIN }}
-      - name: Run application
-        env:
           MY_SECRET: ${{ secrets.MY_SECRET }}
-        run: python your_script.py
