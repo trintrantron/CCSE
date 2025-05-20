@@ -15,6 +15,6 @@ jobs:
         uses: umuttopalak/pythonanywhere-deploy-action@v1.1.0
         with:
           host: 'www.pythonanywhere.com'
-          username: ${{ secrets.PA_USERNAME }}
-          api_token: ${{ secrets.PA_API_TOKEN }}
-          domain_name: ${{ secrets.PA_DOMAIN }}
+          username: trin
+          api_token: 5c5fa25e0ae441d2ece1637e08a1e4fce9ae3ebd
+          domain_name: https://trin.pythonanywhere.com/
