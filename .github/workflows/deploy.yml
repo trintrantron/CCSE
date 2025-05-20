@@ -17,4 +17,4 @@ jobs:
           host: 'www.pythonanywhere.com'
           username: 'trin'
           api_token: '5c5fa25e0ae441d2ece1637e08a1e4fce9ae3ebd'
-          domain_name: 'https://trin.pythonanywhere.com/'
+          domain_name: 'trin.pythonanywhere.com'
