@@ -6,11 +6,13 @@ from flask_wtf import CSRFProtect
 import os
 import http.server
 import git
+from dotenv import load_dotenv
+load_dotenv()
 
 from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY')
+my_secret = os.getenv("MY_SECRET") # app.secret_key = os.environ.get('SECRET_KEY')
 csrf = CSRFProtect(app)
 http.server.BaseHTTPRequestHandler.version_string = lambda self: ""
 
