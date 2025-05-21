@@ -21,9 +21,9 @@ jobs:
       - name: Deploy to PythonAnywhere
         run: |
           pip install requests
-          username: "${{ secrets.PYTHONANYWHERE_USERNAME }}"
-          api_token: "${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
-          domain_name: "${{ secrets.PYTHONANYWHERE_DOMAIN }}"
+          username="${{ secrets.PYTHONANYWHERE_USERNAME }}"
+          api_token="${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
+          domain_name="${{ secrets.PYTHONANYWHERE_DOMAIN }}"
           curl -X POST -H "Authorization: Token ${api_token}" -F "content=@main.py" "https://www.pythonanywhere.com/api/v0/user/${username}/files/mysite/main.py"
 
       - name: Reload PythonAnywhere web app
