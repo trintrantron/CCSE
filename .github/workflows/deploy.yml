@@ -21,7 +21,6 @@ jobs:
       - name: Deploy to PythonAnywhere
         run: |
           pip install requests
-          host: 'www.pythonanywhere.com'
           username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           api_token: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
           domain_name: ${{ secrets.PYTHONANYWHERE_DOMAIN }}
