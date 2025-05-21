@@ -5,14 +5,11 @@ import secrets
 from flask_wtf import CSRFProtect
 import os
 import http.server
-import git
-from dotenv import load_dotenv
-load_dotenv()
 
 from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
-my_secret = os.getenv("MY_SECRET") # app.secret_key = os.environ.get('SECRET_KEY')
+app.secret_key = os.environ.get('SECRET_KEY')
 csrf = CSRFProtect(app)
 http.server.BaseHTTPRequestHandler.version_string = lambda self: ""
 
@@ -95,16 +92,6 @@ def make_session_permanent():
 ###################################################################################################################
 # Pages
 ###################################################################################################################
-
-@app.route('/update_server', methods=['POST'])
-def webhook():
-    if request.method == 'POST':
-        repo = git.Repo('/home/trin/mysite/')
-        origin = repo.remotes.origin
-        origin.pull()
-        return 'Updated PythonAnywhere successfully', 200
-    else:
-        return 'Wrong event type', 400
 
 @app.before_request
 def generate_nonce():

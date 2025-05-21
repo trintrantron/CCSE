@@ -35,14 +35,3 @@
 2025-05-16 14:48:37,233 - ERROR - Exception on /signup_confirm [POST]
 2025-05-16 22:28:14,084 - INFO - Successful login attempt: User 'user' from IP 127.0.0.1
 2025-05-16 22:28:33,541 - INFO - Successful login attempt: User 'admin' from IP 127.0.0.1
-2025-05-19 21:55:44,859 - INFO - New user created: 'trin'
-2025-05-19 21:55:56,290 - WARNING - Failed login attempt: User 'trin' from IP 10.0.4.170
-2025-05-19 21:56:04,297 - INFO - Successful login attempt: User 'trin' from IP 10.0.4.170
-2025-05-19 21:56:44,034 - WARNING - Failed login attempt: User 'admin' from IP 10.0.4.170
-2025-05-19 21:56:52,173 - INFO - Successful login attempt: User 'admin' from IP 10.0.4.170
-2025-05-19 21:59:27,427 - INFO - New user created: 'aggyraggy'
-2025-05-19 21:59:36,980 - INFO - Successful login attempt: User 'aggyraggy' from IP 10.0.4.170
-2025-05-19 22:00:01,008 - INFO - Successful login attempt: User 'admin' from IP 10.0.4.170
-2025-05-19 22:01:56,971 - INFO - Successful login attempt: User 'admin' from IP 10.0.4.170
-2025-05-19 22:15:53,871 - WARNING - Failed login attempt: User 'd.balkwill@yahoo.com' from IP 10.0.4.170
-2025-05-19 22:17:58,207 - INFO - New user created: 'balkwdav'
