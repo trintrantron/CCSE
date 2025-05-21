@@ -11,22 +11,17 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+        uses: actions/checkout@v2
 
       - name: Deploy to PythonAnywhere
-        run: |
-          pip install requests
-          username="${{ secrets.PYTHONANYWHERE_USERNAME }}"
-          api_token="${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
-          domain_name="${{ secrets.PYTHONANYWHERE_DOMAIN }}"
-          curl -X POST -H "Authorization: Token ${api_token}" -F "content=@main.py" "https://www.pythonanywhere.com/api/v0/user/${username}/files/home/${username}/mysite/main.py"
-          echo "https://www.pythonanywhere.com/api/v0/user/${username}/files/home/${username}/mysite/main.py"
-      - name: Reload PythonAnywhere web app
+        uses: umuttopalak/pythonanywhere-deploy-action@v1.1.0
+        with:
+          host: 'www.pythonanywhere.com'
+          username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
+          api_token: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
+          domain_name: ${{ secrets.PYTHONANYWHERE_DOMAIN }}
+
+      - name: Reload web app
         run: |
           curl -X POST \
             -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}" \
