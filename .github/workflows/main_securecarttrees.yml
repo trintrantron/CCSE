@@ -116,4 +116,5 @@ jobs:
         uses: zaproxy/action-baseline@v0.3.0
         with:
           target: 'https://securecarttrees-fyaebscfggfudpcp.uksouth-01.azurewebsites.net/'
+          docker_name: 'zaproxy/zap-stable'
           fail_action: true
