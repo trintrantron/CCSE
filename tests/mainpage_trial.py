@@ -1,9 +1,13 @@
-import pytest
-from django.urls import reverse
+from app import app as flask_app
 
-@pytest.mark.django_db
-def test_useradminlogin_template(client):
-    url = reverse('admin:login')  # Replace with the actual name of your login URL if different
-    response = client.get(url)
+@pytest.fixture
+def client():
+    flask_app.config['TESTING'] = True
+    with flask_app.test_client() as client:
+        yield client
+
+def test_useradminlogin_page(client):
+    response = client.get('/admin/login')
     assert response.status_code == 200
-    assert 'useradminlogin.html' in [t.name for t in response.templates]
+    assert b'<form' in response.data  # Check that the response contains a form
+    assert b'Login' in response.data  # Check that the response contains the word 'Login'
