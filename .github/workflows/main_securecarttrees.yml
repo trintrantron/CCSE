@@ -90,6 +90,7 @@ jobs:
       id-token: write
       contents: read
       issues: write
+      security-events: write
 
     steps:
       - name: Download artifact from build job
