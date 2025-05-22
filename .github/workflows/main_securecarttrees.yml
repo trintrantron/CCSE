@@ -115,7 +115,7 @@ jobs:
       - name: Run Full Zap Scan
         uses: zaproxy/action-full-scan@v0.12.0
         with:
-          target: 'securecarttrees-fyaebscfggfudpcp.uksouth-01.azurewebsites.net'
+          target: 'https://securecarttrees-fyaebscfggfudpcp.uksouth-01.azurewebsites.net'
           fail_action: false
           artifact_name: zap_scan_report
 
