@@ -111,3 +111,9 @@ jobs:
         with:
           app-name: 'secureCartTrees'
           slot-name: 'Production'
+
+      - name: Run ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.3.0
+        with:
+          target: 'https://securecarttrees-fyaebscfggfudpcp.uksouth-01.azurewebsites.net/'
+          fail_action: true
