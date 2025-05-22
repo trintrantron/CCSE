@@ -52,12 +52,12 @@ jobs:
           args: --sarif-file-output=snyk-code.sarif
 
       - name: Upload Snyk dependency scan results to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk-deps.sarif
 
       - name: Upload Snyk Code scan results to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk-code.sarif
 
