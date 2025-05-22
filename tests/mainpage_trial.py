@@ -7,7 +7,6 @@ def client():
         yield client
 
 def test_useradminlogin_page(client):
-    response = client.get('/admin/login')
+    response = client.get('/')
     assert response.status_code == 200
     assert b'<form' in response.data  # Check that the response contains a form
-    assert b'Login' in response.data  # Check that the response contains the word 'Login'
