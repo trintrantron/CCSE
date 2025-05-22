@@ -16,6 +16,7 @@ jobs:
     permissions:
       contents: read
       security-events: write
+      issues: write
 
     steps:
       - uses: actions/checkout@v4
