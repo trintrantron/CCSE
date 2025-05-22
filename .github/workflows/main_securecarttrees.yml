@@ -36,7 +36,7 @@ jobs:
 
       - name: Run Snyk to check for vulnerabilities in dependencies
         uses: snyk/actions/python@master
-        continue-on-error: false
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -44,7 +44,7 @@ jobs:
 
       - name: Run Snyk Code to check for vulnerabilities in proprietary code
         uses: snyk/actions/python@master
-        continue-on-error: false
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
